@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Time Game</title>
+    <style>
+        #targetContainer {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+        }
+        body{
+            background-color: royalblue;
+        }
+        .target {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .target:hover {
+            background-color: #ff4444;
+        }
+
+        #startButton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+        }
+
+        #results {
+            margin: 20px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <button id="startButton">Start Game</button>
+    <div id="targetContainer"></div>
+    <div id="results">
+        <h2>Reaction Times:</h2>
+        <ul id="timesList"></ul>
+        <p>Average: <span id="averageTime"></span> ms</p>
+    </div>
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', startGame);
+
+        function startGame() {
+            const startButton = document.getElementById('startButton');
+            const targetContainer = document.getElementById('targetContainer');
+            const resultsDiv = document.getElementById('results');
+            const timesList = document.getElementById('timesList');
+            const averageTimeSpan = document.getElementById('averageTime');
+
+            startButton.style.display = 'none';
+            targetContainer.innerHTML = '';
+            targetContainer.style.display = 'block';
+            resultsDiv.style.display = 'none';
+
+            let reactionTimes = [];
+            let targetsClicked = 0;
+
+            function scheduleNextTarget() {
+                if (targetsClicked >= 10) {
+                    showResults();
+                    return;
+                }
+
+                setTimeout(createTarget, Math.random() * 1000 + 1000);
+            }
+
+            function createTarget() {
+                const target = document.createElement('div');
+                target.className = 'target';
+
+                // Position randomly within container
+                const containerRect = targetContainer.getBoundingClientRect();
+                const maxX = containerRect.width - 50;
+                const maxY = containerRect.height - 50;
+                const x = Math.random() * maxX;
+                const y = Math.random() * maxY;
+                target.style.left = x + 'px';
+                target.style.top = y + 'px';
+
+                const startTime = Date.now();
+
+                target.addEventListener('click', function handleClick() {
+                    const reactionTime = Date.now() - startTime;
+                    reactionTimes.push(reactionTime);
+                    
+                    target.remove();
+                    targetsClicked++;
+                    
+                    scheduleNextTarget();
+                });
+
+                targetContainer.appendChild(target);
+            }
+
+            function showResults() {
+                targetContainer.style.display = 'none';
+                resultsDiv.style.display = 'block';
+
+                timesList.innerHTML = '';
+                reactionTimes.forEach((time, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = `Target ${index + 1}: ${time} ms`;
+                    timesList.appendChild(li);
+                });
+
+                const average = reactionTimes.reduce((a, b) => a + b, 0) / 10;
+                averageTimeSpan.textContent = average.toFixed(2);
+            }
+
+            scheduleNextTarget();
+        }
+    </script>
+</body>
+</html>
