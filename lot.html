@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Transparency Slider</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 20px;
+      }
+      .slider-container {
+        margin-bottom: 20px;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slider-container">
+      <label for="opacitySlider">Adjust Image Transparency:</label>
+      <input
+        type="range"
+        id="opacitySlider"
+        min="0"
+        max="100"
+        value="100"
+      />
+      <span id="sliderValue">100%</span>
+    </div>
+
+    <img id="myImage" src="https://picsum.photos/400" alt="Sample Image" />
+
+    <script>
+      const slider = document.getElementById("opacitySlider");
+      const image = document.getElementById("myImage");
+      const sliderValue = document.getElementById("sliderValue");
+
+   
+      slider.addEventListener("input", () => {
+        
+        const opacity = slider.value / 100;
+        image.style.opacity = opacity;
+        sliderValue.textContent = slider.value + "%";
+      });
+    </script>
+  </body>
+</html>
