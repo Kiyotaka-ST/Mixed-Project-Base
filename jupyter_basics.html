@@ -1,0 +1,46 @@
+# Basics of Jupyter Notebook
+
+# Printing a simple message
+print("Hello, World!")
+
+# Performing basic arithmetic operations
+sum_result = 5 + 3  # Addition
+product_result = 5 * 3  # Multiplication
+print("Sum:", sum_result)
+print("Product:", product_result)
+
+# Using variables
+name = "Alice"
+age = 25
+print("Name:", name, "Age:", age)
+
+# Defining a simple function
+def greet(user_name):
+    """This function prints a greeting message."""
+    return f"Hello, {user_name}!"
+
+# Calling the function
+greeting_message = greet(name)
+print(greeting_message)
+
+# Using loops (printing numbers from 1 to 5)
+for i in range(1, 6):
+    print("Number:", i)
+
+# Creating a simple list and iterating over it
+numbers = [10, 20, 30, 40, 50]
+for num in numbers:
+    print("List element:", num)
+
+# Importing and using a library (math module)
+import math
+sqrt_value = math.sqrt(16)  # Calculating square root
+print("Square root of 16:", sqrt_value)
+
+# Using Markdown in Jupyter:
+# - Change cell type to Markdown (Esc + M)
+# - Use '#' for headers, '**bold**' for bold, and '`code`' for inline code.
+# - Example: `print("Hello, World!")` will appear as formatted code.
+
+# Running a system command inside a Jupyter cell
+!ls  # Lists files in the current directory (Linux/Mac)
